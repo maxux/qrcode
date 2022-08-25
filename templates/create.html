@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% set activepage = "home" %}
+{% block title %}Vector QR Code Generator{% endblock %}
+
+{% block content %}
+<h1 class="border-bottom border-success">Create a new SVG QR Code</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col" id="input">
+        <form action="/download" method="post">
+            <textarea id="message" name="message"></textarea>
+            <button type="button" class="btn btn-primary" onclick="return generate();">Generate QR Code</button>
+            <button type="submit" class="btn btn-success">Download QR Code</button>
+        </form>
+    </div>
+    <div class="col">
+        <div id="result"></div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+{% endblock %}
