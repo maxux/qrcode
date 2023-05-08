@@ -3,13 +3,16 @@
 {% block title %}Vector QR Code Generator{% endblock %}
 
 {% block content %}
-<h1 class="border-bottom border-success">Create a new SVG QR Code</h1>
+<h1 class="border-bottom border-muted">Create a new SVG QR Code</h1>
 
 <div class="container">
   <div class="row">
     <div class="col" id="input">
         <form action="/download" method="post">
-            <textarea id="message" name="message"></textarea>
+            <div class="mb-3">
+                <textarea id="message" name="message" class="form-control"></textarea>
+            </div>
+
             <button type="button" class="btn btn-primary" onclick="return generate();">Generate QR Code</button>
             <button type="submit" class="btn btn-success">Download QR Code</button>
         </form>
