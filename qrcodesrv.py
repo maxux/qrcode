@@ -5,8 +5,9 @@ import git
 import hashlib
 import qrcode
 import qrcode.image.svg
-from config import config
+from datetime import datetime
 from flask import Flask, request, jsonify, render_template, abort, make_response
+from config import config
 
 app = Flask(__name__, static_url_path='/static')
 app.url_map.strict_slashes = False
@@ -14,6 +15,11 @@ app.url_map.strict_slashes = False
 repo = git.Repo(search_parent_directories=True)
 sha = repo.head.object.hexsha
 gitsha = sha[0:8]
+
+
+@app.context_processor
+def inject_now():
+    return {'now': datetime.utcnow()}
 
 @app.route('/download', methods=['POST'])
 def download():
