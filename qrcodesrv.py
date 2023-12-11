@@ -1,7 +1,6 @@
 import os
 import sys
 import json
-import git
 import hashlib
 import qrcode
 import qrcode.image.svg
@@ -12,10 +11,27 @@ from config import config
 app = Flask(__name__, static_url_path='/static')
 app.url_map.strict_slashes = False
 
-repo = git.Repo(search_parent_directories=True)
-sha = repo.head.object.hexsha
-gitsha = sha[0:8]
+def gitsharoot():
+    try:
+        ref = ""
 
+        with open(".git/HEAD", "r") as f:
+            head = f.read()
+            if not head.startswith("ref:"):
+                return None
+
+            ref = head[5:].strip()
+
+        with open(f".git/{ref}", "r") as f:
+            sha = f.read()
+            return sha[:8]
+
+    except Exception as e:
+        print(e)
+        return None
+
+gitsha = gitsharoot()
+print(f"[+] running code revision: {gitsha}")
 
 @app.context_processor
 def inject_now():
