@@ -6,7 +6,6 @@ import qrcode
 import qrcode.image.svg
 from datetime import datetime
 from flask import Flask, request, jsonify, render_template, abort, make_response
-from config import config
 
 class QRCodeServer:
     def __init__(self):
@@ -87,7 +86,7 @@ class QRCodeServer:
             content = {"revision": self.gitsha}
             return render_template("create.html", **content)
 
-def gunicorn_main():
+if __name__ == "qrcodesrv":
     root = QRCodeServer()
     root.routes()
-    return root.app
+    app = root.app
